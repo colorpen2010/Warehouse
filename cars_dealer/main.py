@@ -24,7 +24,8 @@ while True:
         if mark_inpt == None:
             response = connection.execute(strk)
         else:
-            strk_addon = f"""WHERE car.marka IN '{mark_inpt}'"""
+            strk_addon = f"""WHERE car.marka IN {mark_inpt}"""
+            print(strk + strk_addon)
             response = connection.execute(strk + strk_addon)
         for i in response:
             table.add_row(i[0], str(i[1]), str(i[2]), str(i[3]))
@@ -34,13 +35,22 @@ while True:
     if inpt == 1:
         print("0 : убрать фильтр")
         print("1 : выбрать марку")
+        print("2 : показать фильтр")
         insrt = int(input("введите вариант: "))
-        if insrt == 1:
+        if insrt == 2:
+            if mark_inpt!=None:
+                if type(mark_inpt) is tuple:
+                    print(f"выбраны: {', '.join(mark_inpt)}")
+            else:
+                print("фильтры отключены")
+        elif insrt == 1:
             mark_inpt = input("введите марку: ")
+            mark_inpt=mark_inpt.replace(',',' ')
+            mark_inpt=mark_inpt.split()
+            mark_inpt=tuple(mark_inpt)
         elif insrt == 0:
             mark_inpt = None
-            if ' ' in mark_inpt:
-                ','.
+
         else:
             print("введено неверное число")
     else:
