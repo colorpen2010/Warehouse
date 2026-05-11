@@ -19,10 +19,8 @@ while True:
     inpt = int(input("введите вариант: "))
     if inpt == 0:
         os.system('cls')
-        table=viewer.table_creator("Каталог",["Марка","Цена","Пробег","Год"])
         response = connection.execute(query.filtr_marks(mark_inpt))
-        viewer.table_filler(response,table)
-        # table.add_row(i[0], str(i[1]), str(i[2]), str(i[3]))
+        table = viewer.table_creator("Каталог", {"Марка": 0, "Цена": 1, "Пробег": 2, "Год": 3},response)
         console.print(table)
         input()
     if inpt == 5:
@@ -41,13 +39,10 @@ while True:
                 print("фильтры отключены")
             input()
         elif insrt == 1:
-            mrk_table = viewer.table_creator("Марки",["№","Название"])
+
             os.system('cls')
             print("    --===--  ")
-            mrk_numbers = 1
-            for j in connection.execute(query.asking_marks()):
-                mrk_table.add_row(str(mrk_numbers), str(j[0]))
-                mrk_numbers += 1
+            mrk_table = viewer.table_creator("Марки", {"№": 1, "Название": 0}, connection.execute(query.asking_marks()))
             console.print(mrk_table)
             print("    --===--  ")
             mark_inpt = input("введите марку: ")

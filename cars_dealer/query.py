@@ -13,11 +13,15 @@ def filtr_marks(mark_inpt):
 
 def asking_marks():
     ask_strk = """
-        SELECT DISTINCT marka
-        FROM car
-        ORDER BY marka"""
+        SELECT DISTINCT marka,
+ROW_NUMBER() OVER (ORDER BY marka) AS num
+FROM (
+SELECT DISTINCT marka
+FROM car
+ORDER BY marka
+)
+ORDER BY marka"""
     return ask_strk
-
 
 # another_ask_strk="""
 # SELECT marka, COUNT (ID)
